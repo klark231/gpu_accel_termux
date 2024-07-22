@@ -109,22 +109,6 @@ INFO_NewLineAbove "Checking for requirements..."
 #	exit 1
 #fi
 
-GPU_REQ_FEATURES=$( vulkaninfo | grep -oE '(VK_KHR_maintenance1|VK_KHR_create_renderpass2|VK_KHR_imageless_framebuffer|VK_KHR_descriptor_update_template|VK_KHR_timeline_semaphore|VK_EXT_transform_feedback)' | wc -l )
-
-INFO_NLANoNextLine "Does GPU has feature VK_KHR_maintenance1, VK_KHR_create_renderpass2, VK_KHR_imageless_framebuffer, VK_KHR_descriptor_update_template, VK_KHR_timeline_semaphore, and VK_EXT_transform_feedback?"
-if [[ $GPU_REQ_FEATURES == 6 ]]; then
-	echo " yes"
-elif [[ $GPU_REQ_FEATURES == 5 ]]; then
-	echo ""
-	INFO_NewLineAbove "Wait for another script that installs the old supported version..."
-	exit 1
-else
-	echo " no"
-	
-	DIE "Double check using 'vulkaninfo | grep -oE '(VK_KHR_maintenance1|VK_KHR_create_renderpass2|VK_KHR_imageless_framebuffer|VK_KHR_descriptor_update_template|VK_KHR_timeline_semaphore|VK_EXT_transform_feedback)''"
-	exit 1
-fi
-
 GPU_DRIVER_VERSION=$( vulkaninfo | grep driverVersion | cut -d ' ' -f7 | tr -d '.' )
 
 #FIXME: Add Qualcomm/PowerVR Version compare logic
